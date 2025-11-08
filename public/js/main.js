@@ -1,5 +1,8 @@
 const chatForm= document.getElementById('chat-form')
 const messageBar= document.querySelector(".chat-messages")
+const leaveBTN=document.getElementById("leave-btn")
+const roomName=document.getElementById("room-name")
+const userList=document.getElementById("users")
 
 //Get username and room from URL
 const {username,room}=Qs.parse(location.search,{
@@ -11,10 +14,17 @@ const socket=io()
 
 //Join room event and send to backend 
 socket.emit("joinRoom",{username,room})
+
+//Add room information
+socket.on("roomInfo",({room,users})=>{
+    addRoomName(room)
+    userListToRoom(users)
+})
 //Message from server
 socket.on("message",(message)=>{
     console.log(message)
     ShowMessage(message)
+   
     
 
     //scroll to the bottom
@@ -44,3 +54,34 @@ function ShowMessage(message){
     `
     messageBar.appendChild(div)
 }
+
+//add roomname function
+function addRoomName(room){
+    roomName.innerText=room
+}
+
+//add user to group function
+
+function userListToRoom(users){
+    const li=document.createElement("li")
+    li.className="list"
+    users.forEach((user)=>{
+    li.innerText=user.username
+    userList.appendChild(li)
+    }
+    )
+
+}
+
+
+
+
+
+//Leave room button
+leaveBTN.addEventListener('click',()=>{
+    const leaveRoom=confirm("Are you sure you want to leave room?")
+
+    if(leaveRoom){
+        window.location='../index.html'
+    }
+})

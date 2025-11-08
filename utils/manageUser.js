@@ -19,7 +19,7 @@ function getCurUser(Id){
 
 // user leave
 function userLeave(id){
-    let userIndex=users.findIndex((i)=>i===id)
+    let userIndex=users.findIndex((i)=>i.userId===id)
     if(userIndex!==-1){
         //returning the user
         return users.splice(userIndex,1)[0]
@@ -28,6 +28,7 @@ function userLeave(id){
 //find current users in the room
 function roomUser(room){
    const userInRoom=users.filter((user)=>user.room===room)
+   return userInRoom
 }
 export {
     userJoin,

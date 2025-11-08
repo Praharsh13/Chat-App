@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import http from 'http'
 import {Server} from 'socket.io'
 import messageStr  from './utils/messageStructure.js'
-import { userJoin,getCurUser } from './utils/manageUser.js'
+import { userJoin,getCurUser,userLeave,roomUser } from './utils/manageUser.js'
 
 dotenv.config()
 //Set up __dirname in ES module
@@ -45,6 +45,12 @@ io.on("connection",socket=>{
     //Broadcast when user connects to all user except that
     socket.broadcast.to(user.room).emit("message",messageStr(BOT,`${user.username} connect to chat`))
 
+    //send all user and room info
+    io.to(user.room).emit("roomInfo",{
+        room:user.room,
+        users:roomUser(user.room)
+    })
+
 
     })
 
@@ -62,8 +68,24 @@ io.on("connection",socket=>{
 
      //Disconnect
      socket.on("disconnect",()=>{
-        //this emit to all the user
-        io.emit("message", messageStr(BOT,"User left the chat"))
+        let user=userLeave(socket.id)
+        console.log(user)
+
+        if(user)
+        {
+            console.log(user)
+            //this emit to all the user
+            io.to(user.room).emit("message", messageStr(BOT,`${user.username} left the chat`))
+
+                  //send all user and room info
+        io.to(user.room).emit("roomInfo",{
+            room:user.room,
+            users:roomUser(user.room)
+        })
+        }
+
+  
+        
     })
 })
 
