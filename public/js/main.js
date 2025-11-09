@@ -15,6 +15,13 @@ const socket=io()
 //Join room event and send to backend 
 socket.emit("joinRoom",{username,room})
 
+//Load old message
+socket.on("oldMessage",(messHistory)=>(
+    messHistory.forEach((mess)=>(
+        ShowMessage(mess)
+    ))
+))
+
 //Add room information
 socket.on("roomInfo",({room,users})=>{
     addRoomName(room)
@@ -49,7 +56,7 @@ function ShowMessage(message){
     const div=document.createElement('div')
     div.classList.add('message')
     div.innerHTML=`
-    <p class="meta">${message.username}<span>9:12pm</span></p>
+    <p class="meta">${message.username}<span>${message.time}</span></p>
     <p class="text">${message.text}</p>
     `
     messageBar.appendChild(div)
