@@ -60,22 +60,7 @@ The entire system is **fully containerised** and deployed publicly using Docker 
 
 ### High-Level System Architecture
 
-┌─────────────┐
-│   Browser   │
-│  (Client)   │
-└─────┬───────┘
-      │ WebSocket (Socket.IO)
-      ▼
-┌──────────────────┐
-│  Node.js Server  │
-│  (Express + IO)  │
-└─────┬──────┬─────┘
-      │      │
-      ▼      ▼
-┌──────────┐ ┌──────────┐
-│ MongoDB  │ │  Redis   │
-│ Messages │ │ Pub/Sub  │
-└──────────┘ └──────────┘
+![Alt text](image-3.png)
 
 
 ### Why this architecture matters
