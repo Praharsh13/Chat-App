@@ -1,113 +1,203 @@
-# ChatCord – Real-Time Chat Application
+# 🚀 ChatCord — Real-Time Chat Application
 
-ChatCord is a real-time chat application built with **Node.js**, **Socket.IO**, **MongoDB**, and **Redis**.  
-It supports multiple chat rooms, live user presence, and message history, and is fully containerised using Docker.
+![Docker](https://img.shields.io/badge/Docker-Containerised-blue?logo=docker)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green?logo=node.js)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-Real--Time-black?logo=socket.io)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-darkgreen?logo=mongodb)
+![Redis](https://img.shields.io/badge/Redis-Pub%2FSub-red?logo=redis)
 
-The project is designed to demonstrate **real-world backend architecture**, including local development with Docker Compose and public deployment using container images.
+🔗 **Live Application**  
+👉 https://flying-rheba-student13-75d1d153.koyeb.app/
 
----
-
-## Features
-
-- Real-time messaging with Socket.IO
-- Multiple chat rooms
-- Live user join/leave updates
-- Message history stored in MongoDB
-- Redis used for fast in-memory operations
-- Fully Dockerised setup
-- Clean separation between local development and public deployment
+📦 **Docker Image**  
+👉 https://hub.docker.com/r/praharsh13/chatapp
 
 ---
 
-## Tech Stack
+## 🧠 What is ChatCord?
 
-- **Backend:** Node.js, Express
-- **Real-time:** Socket.IO
-- **Database:** MongoDB
-- **Cache / Pub-Sub:** Redis
-- **Containerisation:** Docker, Docker Compose
-- **Frontend:** Vanilla HTML, CSS, JavaScript
+**ChatCord** is a real-time chat application built to demonstrate **production-style backend architecture** using WebSockets, persistence, caching, and container orchestration.
 
----
+It supports:
+- Multiple chat rooms  
+- Live user presence  
+- Persistent message history  
+- Scalable real-time communication  
 
-## Architecture Overview
+The entire system is **fully containerised** and deployed publicly using Docker images.
 
-### Local Development
-- Docker Compose runs:
-  - Node.js app
-  - MongoDB
-  - Redis
-- All services communicate over Docker’s internal network
 
-### Public Deployment
-- App is deployed as a Docker container
-- MongoDB and Redis run as separate containers
-- All images are pulled from Docker Hub
-- Services communicate using internal container hostnames
-
-This mirrors common production setups while remaining simple and portable.
+![Home Page](image.png)
+![Chat Room](image-1.png)
 
 ---
 
-## Getting Started (Local Development)
+## ✨ Features
 
-### Prerequisites
-- Docker
-- Docker Compose
-
-### Run locally
-```bash
-docker compose up -d --build
+- Real-time messaging with Socket.IO  
+- Multiple chat rooms  
+- Live user join and leave updates  
+- Message history stored in MongoDB  
+- Redis for fast in-memory operations and pub/sub  
+- Fully Dockerised (app, MongoDB, Redis)  
+- Clear separation between development and deployment  
 
 ---
 
-## Environment Variables
-Variable	Description
-PORT	Port the app listens on
-MONGO_URL	MongoDB connection string
-REDIS_URL	Redis connection string
+## 🧰 Tech Stack
 
-These are injected via Docker or the hosting platform.
+![Node.js](https://img.shields.io/badge/Node.js-green?logo=node.js)
+![Express](https://img.shields.io/badge/Express-black?logo=express)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-black?logo=socket.io)
+![MongoDB](https://img.shields.io/badge/MongoDB-darkgreen?logo=mongodb)
+![Redis](https://img.shields.io/badge/Redis-red?logo=redis)
+![Docker](https://img.shields.io/badge/Docker-blue?logo=docker)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-blue?logo=docker)
+![Koyeb](https://img.shields.io/badge/Koyeb-purple)
+---
 
-Project Structure
+## 🏗 Architecture Overview
+
+### High-Level System Architecture
+
+┌─────────────┐
+│   Browser   │
+│  (Client)   │
+└─────┬───────┘
+      │ WebSocket (Socket.IO)
+      ▼
+┌──────────────────┐
+│  Node.js Server  │
+│  (Express + IO)  │
+└─────┬──────┬─────┘
+      │      │
+      ▼      ▼
+┌──────────┐ ┌──────────┐
+│ MongoDB  │ │  Redis   │
+│ Messages │ │ Pub/Sub  │
+└──────────┘ └──────────┘
+
+
+### Why this architecture matters
+
+- **Socket.IO** enables real-time, bi-directional communication  
+- **MongoDB** provides persistent message storage  
+- **Redis** supports fast state updates and pub/sub patterns  
+- **Docker** ensures consistency across environments  
+
+![Communication](image-2.png)
+
+
+
+---
+
+## 📂 Project Structure
+
 .
 ├── index.js
 ├── package.json
 ├── Dockerfile
 ├── docker-compose.yml
 ├── public/
-│   ├── css/
-│   ├── js/
-│   └── html/
+│ ├── css/
+│ ├── js/
+│ └── html/
 └── README.md
 
 
-## Future Improvements
 
-- Authentication and private rooms
-- Message delivery acknowledgements
-- Rate limiting and moderation tools
-- HTTPS and reverse proxy setup
-- Horizontal scaling with Redis adapters
+---
 
-## License
+## ⚙️ Environment Variables
 
-Copyright (c) 2025 Praharsh Pranjal
+| Variable | Description |
+|--------|-------------|
+| PORT | Port the app listens on |
+| MONGO_URL | MongoDB connection string |
+| REDIS_URL | Redis connection string |
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Injected via Docker or the hosting platform.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+---
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## ▶️ Local Development
+
+### Prerequisites
+- Docker  
+- Docker Compose  
+
+### Run locally
+
+```bash
+docker compose up -d --build
+Open:
+
+arduino
+Copy code
+http://localhost:3000
+🌍 Deployment (Docker + Koyeb)
+This project is deployed using Docker images and Docker Compose on Koyeb.
+
+Deployment workflow
+Build and push the app image
+
+bash
+Copy code
+docker build -t praharsh13/chatapp:latest .
+docker push praharsh13/chatapp:latest
+Compose-based deployment
+
+App container
+
+MongoDB container
+
+Redis container
+
+Internal Docker networking
+
+Koyeb configuration
+
+Dockerfile builder
+
+Dockerfile.koyeb
+
+Privileged mode enabled
+
+Port 3000 exposed
+
+Live access
+
+
+https://flying-rheba-student13-75d1d153.koyeb.app/
+🚀 What This Project Demonstrates
+Real-time systems using WebSockets
+
+Backend scalability patterns
+
+Docker-based deployments
+
+Production-style service separation
+
+Practical use of Redis and MongoDB
+
+Debugging real cloud deployment issues
+
+This project mirrors how real-world backend systems are built and deployed.
+
+🔮 Future Improvements
+Authentication and private rooms
+
+Message delivery acknowledgements
+
+Rate limiting and moderation tools
+
+Reverse proxy and HTTPS termination
+
+Horizontal scaling with Redis adapters
+
+📜 License
+MIT License
+
+© 2025 Praharsh Pranjal
+
+
