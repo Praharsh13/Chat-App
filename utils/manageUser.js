@@ -2,7 +2,7 @@ import Message from "../model/message.modal.js"
 import User from "../model/user.modal.js"
 
 
-const users=[]
+
 
 
 
@@ -17,7 +17,7 @@ async function userJoin(userId,username,room){
 
     })
 
-    users.push(user)
+   // users.push(user)
     return user
 }
 
@@ -49,7 +49,8 @@ async function userLeave(id){
 }
 //find current users in the room
 async function roomUser(room){
-   const userInRoom=await User.find({room})
+   const userInRoom=await User.distinct('username',{room})
+   
    return userInRoom
 }
 export {

@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: chatapp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://mongo:27017/chatapp
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - .:/app
+    command: node index.js
+
+  mongo:
+    image: mongo:6
+    container_name: chat-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"        # optional to expose to host, useful for debugging
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:7
+    container_name: chat-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"         # optional to expose to host
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mongo-data:
+  redis-data:

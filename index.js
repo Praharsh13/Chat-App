@@ -37,7 +37,7 @@ let pubClient;
 let subClient;
 
 (async () => {
-    pubClient = createClient({ url: "redis://127.0.0.1:6379" });
+    pubClient = createClient({ url: "redis://redis:6379"});
     await pubClient.connect();
     subClient = pubClient.duplicate();
     io.adapter(createAdapter(pubClient, subClient));
@@ -53,6 +53,12 @@ io.on("connection",socket=>{
         const user= await userJoin(socket.id,username,room)
        //this connect the socket to that room
         socket.join(user.room)
+
+// //update user
+//         io.to(user.room).emit("roomInfo",{
+//             room:user.room,
+//             users:await roomUser(user.room)
+//         })
 
 
         //Fetch old chat history
@@ -93,6 +99,10 @@ io.on("connection",socket=>{
         room:user.room,
         users:await roomUser(user.room)
     })
+
+    let list=await roomUser(user.room)
+
+    //console.log(`list is ${list}`)
 
 
     })
@@ -147,6 +157,7 @@ io.on("connection",socket=>{
         io.to(user.room).emit("roomInfo",{
             room:user.room,
             users:await roomUser(user.room)
+            
         })
         }
 

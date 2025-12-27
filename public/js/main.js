@@ -15,6 +15,15 @@ const socket=io()
 //Join room event and send to backend 
 socket.emit("joinRoom",{username,room})
 
+//Add room information
+socket.on("roomInfo",({room,users})=>{
+    users.forEach((i)=>{
+        console.log(i.username)
+    })
+    addRoomName(room)
+    userListToRoom(users)
+})
+
 //Load old message
 socket.on("oldMessage",(messHistory)=>(
     messHistory.forEach((mess)=>(
@@ -22,14 +31,10 @@ socket.on("oldMessage",(messHistory)=>(
     ))
 ))
 
-//Add room information
-socket.on("roomInfo",({room,users})=>{
-    addRoomName(room)
-    userListToRoom(users)
-})
+
 //Message from server
 socket.on("message",(message)=>{
-    console.log(message)
+    //console.log(message)
     ShowMessage(message)
    
     
@@ -53,13 +58,28 @@ chatForm.addEventListener('submit',e=>{
 })
 
 function ShowMessage(message){
-    const div=document.createElement('div')
-    div.classList.add('message')
-    div.innerHTML=`
+    // const div=document.createElement('div')
+    // div.classList.add('message')
+    // div.innerHTML=`
+    // <p class="meta">${message.username}<span>${message.time}</span></p>
+    // <p class="text">${message.text}</p>
+    // `
+    // messageBar.appendChild(div)
+
+    const div = document.createElement('div');
+  div.classList.add('message');
+
+  // If the message is from the bot (chatCord)
+  if (message.username === 'chatCord') {
+    div.classList.add('bot-message');
+  }
+
+  div.innerHTML = `
     <p class="meta">${message.username}<span>${message.time}</span></p>
     <p class="text">${message.text}</p>
-    `
-    messageBar.appendChild(div)
+  `;
+
+  messageBar.appendChild(div);
 }
 
 //add roomname function
@@ -70,10 +90,12 @@ function addRoomName(room){
 //add user to group function
 
 function userListToRoom(users){
-    const li=document.createElement("li")
-    li.className="list"
+    userList.innerHTML='';
+    
     users.forEach((user)=>{
-    li.innerText=user.username
+    const li=document.createElement("li")
+    li.className="list"    
+    li.innerText=user
     userList.appendChild(li)
     }
     )
