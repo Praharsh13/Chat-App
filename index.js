@@ -167,7 +167,7 @@ io.on("connection",socket=>{
 })
 
 
-server.listen(PORT,()=>{
+server.listen(PORT,"0.0.0.0",()=>{
 connectDB()
 console.log(`Running on ${PORT}`)
 }
